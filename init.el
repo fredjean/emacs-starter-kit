@@ -77,9 +77,4 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
-;; Personal mods
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(color-theme-twilight)
-
 ;;; init.el ends here
