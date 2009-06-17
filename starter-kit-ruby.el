@@ -94,5 +94,12 @@ exec-to-string command, but it works and seems fast"
 ;; TODO: set up ri
 ;; TODO: electric
 
+;; Adding the cucumber mode
+
+;; Load bundle snippets
+(yas/load-directory "~/.emacs.d/elpa-to-submit/snippets")
+
+(add-to-list 'auto-mode-alist '("\\.feature" . feature-mode))
+
 (provide 'starter-kit-ruby)
 ;; starter-kit-ruby.el ends here
