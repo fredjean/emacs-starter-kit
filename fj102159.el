@@ -13,6 +13,9 @@
 
 (setq ruby-deep-indent-paren nil)
 (setq ruby-deep-arglist nil)
+<<<<<<< HEAD
 (set-default-font "Consolas 12")
 (global-linum-mode 1)
+=======
+>>>>>>> Configuration changes and scala support.
 

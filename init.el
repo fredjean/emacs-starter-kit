@@ -9,26 +9,15 @@
 ;; and brighter; it simply makes everything else vanish."
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
-;; Turn off mouse interface early in startup to avoid momentary display
-;; You really don't need these; trust me.
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
 ;; Load path etc.
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
-;; Load up ELPA, the package manager
-
 (add-to-list 'load-path dotfiles-dir)
-
-(require 'package)
-(package-initialize)
-(require 'starter-kit-elpa)
-
 (add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit"))
+(add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit/jabber"))
+(add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit/color-theme"))
 
 (setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
@@ -47,6 +36,16 @@
 ;; backport some functionality to Emacs 22 if needed
 (require 'dominating-file)
 
+;; this must be loaded before ELPA since it bundles its own
+;; out-of-date js stuff. TODO: fix it to use ELPA dependencies
+(load "elpa-to-submit/nxhtml/autostart")
+
+;; Load up ELPA, the package manager
+
+(require 'package)
+(package-initialize)
+(require 'starter-kit-elpa)
+
 ;; Load up starter kit customizations
 
 (require 'starter-kit-defuns)
@@ -61,6 +60,10 @@
 
 (regen-autoloads)
 (load custom-file 'noerror)
+
+;; Work around a bug on OS X where system-name is FQDN
+(if (eq system-type 'darwin)
+    (setq system-name (car (split-string system-name "\\."))))
 
 ;; You can keep system- or user-specific customizations here
 (setq system-specific-config (concat dotfiles-dir system-name ".el")
