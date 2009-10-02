@@ -13,4 +13,7 @@
 
 (setq ruby-deep-indent-paren nil)
 (setq ruby-deep-arglist nil)
+(global-linum-mode 1)
+
+(set-default-font "Consolas 11")
 
